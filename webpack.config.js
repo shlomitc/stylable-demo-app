@@ -1,5 +1,6 @@
 const path = require('path');
 const { StylableWebpackPlugin } = require('@stylable/webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   mode: "production",
@@ -14,7 +15,10 @@ module.exports = {
     ],
   },
   plugins: [
-    new StylableWebpackPlugin()
+    new StylableWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'src/index.html'
+    })
   ],
   resolve: {
     extensions: ['*', '.js', '.jsx'],
@@ -22,5 +26,11 @@ module.exports = {
   externals: {
     react: 'React',
     'react-dom': 'ReactDOM'
-  }
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 3000,
+    historyApiFallback: true,
+  },
 }
